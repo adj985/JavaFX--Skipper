@@ -14,13 +14,13 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="skipper.SkipperViewController">
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1318.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="skipper.SkipperViewController">
     <tabs>
         <Tab fx:id="salesTab" text="Prodaja">
             <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                     <children>
-                        <HBox layoutX="10.0" layoutY="21.0" prefHeight="745.0" prefWidth="1191.0" spacing="20.0">
+                        <HBox layoutX="10.0" layoutY="21.0" prefHeight="848.0" prefWidth="1307.0" spacing="20.0">
                             <children>
                                 <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="553.0" prefWidth="274.0" spacing="10.0">
                                     <children>
@@ -36,13 +36,13 @@
                                         </HBox>
                                     </children>
                                 </VBox>
-                                <TableView fx:id="salesTable" prefHeight="578.0" prefWidth="1000.0">
+                                <TableView fx:id="salesTable" onMouseClicked="#fillTheFields" prefHeight="848.0" prefWidth="1014.0">
                                     <columns>
-                                        <TableColumn fx:id="dateOfSaleCol" prefWidth="112.0" text="Datum prodaje" />
-                                        <TableColumn fx:id="associateCol" prefWidth="390.0" text="Saradnik" />
-                                        <TableColumn fx:id="status" prefWidth="127.0" text="Status" />
-                                        <TableColumn fx:id="cityCol" prefWidth="120.0" text="Grad" />
-                                        <TableColumn fx:id="totalAmountCol" prefWidth="169.0" text="Ukupan iznos" />
+                                        <TableColumn fx:id="dateOfSaleCol" prefWidth="130.0" text="Datum prodaje" />
+                                        <TableColumn fx:id="associateCol" prefWidth="417.0" text="Saradnik" />
+                                        <TableColumn fx:id="status" prefWidth="174.0" text="Status" />
+                                        <TableColumn fx:id="cityCol" prefWidth="141.0" text="Grad" />
+                                        <TableColumn fx:id="totalAmountCol" prefWidth="149.0" text="Ukupan iznos" />
                                         
                                     </columns>
                                 </TableView>

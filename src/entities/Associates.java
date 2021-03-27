@@ -113,7 +113,7 @@ public class Associates {
             
             Connection conn = DbConnection.connect();
             Statement s = conn.createStatement();
-            s.execute("SELECT * FROM associates");
+            s.execute("SELECT * FROM associates ORDER BY first_name");
             ResultSet rs = s.getResultSet();
             while(rs.next()){
                 id = Integer.parseInt(rs.getString("associate_id"));

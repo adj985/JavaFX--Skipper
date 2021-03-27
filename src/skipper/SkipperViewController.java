@@ -9,6 +9,7 @@ import entities.Associates;
 import entities.Sales;
 import java.net.URL;
 import java.time.LocalDate;
+import java.util.Objects;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -25,6 +26,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 
 /**
  * FXML Controller class
@@ -92,27 +94,18 @@ public class SkipperViewController implements Initializable {
                 city = "Kragujevac";
             }
             Sales s = new Sales(ass, stat, city, totalAmount, datePick.getValue());
-            boolean isTrue = false;
-            ObservableList list = Sales.getSales();
-            if (isTrue == true) {
-                for (Object list1 : list) {
-                    if (list1.equals(s)) {
-                        a.setAlertType(Alert.AlertType.ERROR);
-                        a.setTitle(null);
-                        a.setContentText("Vec postoji prodaja koju pokusavate da unesete!");
-                        a.show();
-                        isTrue = true;
-                        return;
-                    } else {
-                        isTrue = false;
-                        return;
-                    }
-                    
+
+            // Checking for duplicate entries
+            for (int i = 0; i < salesTable.getItems().size(); i++) {
+                if (salesTable.getItems().get(i).getAssociate().equals(s.getAssociate()) && salesTable.getItems().get(i).getTotalAmount().equals(s.getTotalAmount()) && salesTable.getItems().get(i).getDateOfSale().equals(s.getDateOfSale())) {
+                    a.setAlertType(Alert.AlertType.ERROR);
+                    a.setHeaderText(null);
+                    a.setContentText("Vec postoji prodaja koju pokusavate da unesete!");
+                    a.show();
+                    return;
                 }
-                
-            } else {
-                Sales.saveSales(ass, stat, city, totalAmount, dateOfSale);
             }
+//            Sales.saveSales(ass, stat, city, totalAmount, dateOfSale);
 
         } catch (NumberFormatException | NullPointerException ex) {
             a.setAlertType(Alert.AlertType.WARNING);
@@ -144,6 +137,10 @@ public class SkipperViewController implements Initializable {
             associateComboBox.setItems(null);
             associateComboBox.setDisable(true);
         }
+    }
+    
+    @FXML
+    private void fillTheFields(MouseEvent event) {
     }
 
     /**
@@ -225,4 +222,6 @@ public class SkipperViewController implements Initializable {
         associatesTable.setItems(a);
 
     }
+
+    
 }

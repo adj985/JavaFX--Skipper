@@ -123,7 +123,7 @@ public class Sales {
 
             conn = DbConnection.connect();
             Statement s = conn.createStatement();
-            s.execute("SELECT * FROM sales");
+            s.execute("SELECT * FROM sales ORDER BY date_of_sale");
             ResultSet rs = s.getResultSet();
             
             while(rs.next()){
