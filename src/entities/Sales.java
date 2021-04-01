@@ -94,14 +94,6 @@ public class Sales {
         Sales.conn = conn;
     }
 
-//    public static ObservableList<Sales> getSalesList() {
-//        return salesList;
-//    }
-//
-//    public static void setSalesList(ObservableList<Sales> salesList) {
-//        Sales.salesList = salesList;
-//    }
-
     @Override
     public String toString() {
         return "Sales{" + "associate=" + associate + ", status=" + status + ", city=" + city + ", totalAmount=" + totalAmount + ", dateOfSale=" + dateOfSale + '}';
