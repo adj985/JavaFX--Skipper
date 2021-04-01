@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1318.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="skipper.SkipperViewController">
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1318.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="skipper.SkipperViewController">
     <tabs>
         <Tab fx:id="salesTab" text="Prodaja">
             <content>
@@ -25,13 +25,14 @@
                                 <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="553.0" prefWidth="274.0" spacing="10.0">
                                     <children>
                                         <CheckBox fx:id="associateCheckBox" mnemonicParsing="false" onAction="#loadAssociates" text="Saradnik" />
-                                        <ComboBox fx:id="associateComboBox" disable="true" onAction="#selectAnAssociate" prefHeight="25.0" prefWidth="273.0" promptText="Odaberi saradnika" />
+                                        <ComboBox fx:id="associateComboBox" disable="true" prefHeight="25.0" prefWidth="273.0" promptText="Odaberi saradnika" />
                                         <TextField fx:id="amountField" minHeight="-Infinity" prefHeight="25.0" prefWidth="175.0" promptText="Ukupan iznos" />
                                         <DatePicker fx:id="datePick" prefHeight="25.0" prefWidth="153.0" promptText="datum prodaje" />
                                         <HBox prefHeight="45.0" prefWidth="274.0" spacing="20.0">
                                             <children>
-                                                <Button fx:id="okButton" mnemonicParsing="false" onAction="#saveTheSale" prefHeight="25.0" prefWidth="67.0" text="OK" />
-                                                <Button fx:id="cancelButton" mnemonicParsing="false" onAction="#clearTheFields" prefHeight="25.0" prefWidth="67.0" text="Cancel" />
+                                                <Button fx:id="okButton" mnemonicParsing="false" onAction="#saveTheSale" prefHeight="25.0" prefWidth="105.0" text="Sacuvaj prodaju" />
+                                                <Button fx:id="cancelButton" mnemonicParsing="false" onAction="#clearTheFields" prefHeight="25.0" prefWidth="67.0" text="Ponisti" />
+                                    <Button fx:id="updateButton" layoutX="97.0" layoutY="10.0" mnemonicParsing="false" onAction="#updateSales" prefHeight="25.0" prefWidth="67.0" text="Izmeni" />
                                             </children>
                                         </HBox>
                                     </children>

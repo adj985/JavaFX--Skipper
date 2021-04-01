@@ -16,6 +16,7 @@ import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import skipper.DbConnection;
 
 /**
@@ -23,7 +24,7 @@ import skipper.DbConnection;
  * @author Coa
  */
 public class Sales {
-    
+
     private String associate;
     private String status;
     private String city;
@@ -31,7 +32,7 @@ public class Sales {
     private LocalDate dateOfSale;
 
     private static Connection conn = null;
-    private static ObservableList<Sales> salesList = FXCollections.observableArrayList();  
+    private static ObservableList<Sales> salesList = FXCollections.observableArrayList();
     private static Alert a = new Alert(Alert.AlertType.CONFIRMATION);
 
     public Sales() {
@@ -93,13 +94,13 @@ public class Sales {
         Sales.conn = conn;
     }
 
-    public static ObservableList<Sales> getSalesList() {
-        return salesList;
-    }
-
-    public static void setSalesList(ObservableList<Sales> salesList) {
-        Sales.salesList = salesList;
-    }
+//    public static ObservableList<Sales> getSalesList() {
+//        return salesList;
+//    }
+//
+//    public static void setSalesList(ObservableList<Sales> salesList) {
+//        Sales.salesList = salesList;
+//    }
 
     @Override
     public String toString() {
@@ -108,12 +109,12 @@ public class Sales {
 
     /**
      * Return all the sales from the database
-     * 
-     * @return 
+     *
+     * @return
      */
-    public static ObservableList<Sales> getSales(){
+    public static ObservableList<Sales> getSales() {
         salesList.clear();
-        try{
+        try {
             String associate;
             String status;
             String city;
@@ -125,8 +126,8 @@ public class Sales {
             Statement s = conn.createStatement();
             s.execute("SELECT * FROM sales ORDER BY date_of_sale");
             ResultSet rs = s.getResultSet();
-            
-            while(rs.next()){
+
+            while (rs.next()) {
                 associate = rs.getString("associate");
                 status = rs.getString("status");
                 city = rs.getString("city");
@@ -137,9 +138,9 @@ public class Sales {
                 salesList.add(new Sales(associate, status, city, totalAmount, date));
             }
             return salesList;
-            
+
         } catch (SQLException e) {
-        } finally{
+        } finally {
             try {
                 conn.close();
             } catch (SQLException ex) {
@@ -148,21 +149,21 @@ public class Sales {
         }
         return null;
     }
-    
+
     /**
      * Saving a new sale in the database
-     * 
+     *
      * @param associate
      * @param status
      * @param city
      * @param totalAmount
-     * @param dateOfSale 
+     * @param dateOfSale
      */
-    public static void saveSales(String associate, String status, String city, Double totalAmount, String dateOfSale){
+    public static void saveSales(String associate, String status, String city, Double totalAmount, String dateOfSale) {
         try {
             conn = DbConnection.connect();
             Statement s = conn.createStatement();
-            s.execute("INSERT INTO sales (sales_id, associate, status, city, total_amount, date_of_sale) VALUES (null, '"+associate+"', '"+status+"','"+city+"','"+totalAmount+"','"+dateOfSale+"')");
+            s.execute("INSERT INTO sales (sales_id, associate, status, city, total_amount, date_of_sale) VALUES (null, '" + associate + "', '" + status + "','" + city + "','" + totalAmount + "','" + dateOfSale + "')");
             a.setHeaderText(null);
             a.setContentText("Uspešno ste sačuvali prodaju!");
             a.show();
@@ -172,15 +173,39 @@ public class Sales {
             a.setHeaderText(null);
             a.setContentText(e.getMessage());
             a.show();
-        } finally{
+        } finally {
             try {
                 conn.close();
             } catch (SQLException ex) {
                 Logger.getLogger(Sales.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        
+
     }
-    
-    
+
+    public static void updateSales(int id, String associate,String city, String status, Double totalAmount, String dateOfSale) {
+
+        try {
+            conn = DbConnection.connect();
+            Statement s = conn.createStatement();
+            s.execute("UPDATE sales SET associate = '" + associate + "', total_amount = '" + totalAmount + "', status = '"+status+"', city = '"+city+"', date_of_sale = '" + dateOfSale + "' WHERE sales_id = '" + id + "'");
+            a.setHeaderText(null);
+            a.setContentText("Uspešno ste izmenili podatke!");
+            a.show();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            a.setAlertType(Alert.AlertType.ERROR);
+            a.setHeaderText(null);
+            a.setContentText(e.getMessage());
+            a.show();
+        } finally {
+            try {
+                conn.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(Sales.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
+    }
+
 }
