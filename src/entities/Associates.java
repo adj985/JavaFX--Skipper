@@ -20,6 +20,8 @@ import skipper.DbConnection;
  * @author Coa
  */
 public class Associates {
+
+    private static Connection conn;
     
     private Integer id;
     private String firstName;
@@ -30,6 +32,7 @@ public class Associates {
     private LocalDate startDate;
     
     private static ObservableList<Associates> associatesList = FXCollections.observableArrayList();
+    private static Alert a = new Alert(Alert.AlertType.CONFIRMATION);
 
     public Associates() {
     }
@@ -135,6 +138,29 @@ public class Associates {
             a.show();
         }
         return null;
+    }
+    
+    public static void saveAssociate(String firstName, String lastName, String residence, String status, LocalDate dateOfBirth, LocalDate startDate){
+        try {
+            conn = DbConnection.connect();
+            Statement s = conn.createStatement();
+            s.execute("INSERT INTO associates(associate_id, first_name, last_name, residence, status, date_of_birth, start_date) VALUES(null, '"+firstName+"', '"+lastName+"', '"+residence+"', '"+status+"', '"+dateOfBirth.toString()+"', '"+startDate.toString()+"')");
+            a.setHeaderText(null);
+            a.setContentText("Uspešno ste kreirali novog saradnika!");
+            a.show();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            a.setAlertType(Alert.AlertType.ERROR);
+            a.setHeaderText(null);
+            a.setContentText(e.getMessage());
+            a.show();
+        } finally {
+            try {
+                conn.close();
+            } catch (SQLException ex) {
+                ex.getMessage();
+            }
+        }
     }
 
     @Override
