@@ -71,7 +71,7 @@ public class SkipperViewController implements Initializable {
 
     @FXML
     private void saveTheSale(ActionEvent event) {
-        Associates as = null;
+        Associates as;
         String associate;
         String stat;
         String city;
@@ -91,7 +91,7 @@ public class SkipperViewController implements Initializable {
                 stat = "Lider";
                 city = "Kragujevac";
             }
-            Sales s = new Sales(associate, stat, city, totalAmount, datePick.getValue());
+            Sales s = new Sales(null, associate, stat, city, totalAmount, datePick.getValue());
 
             // Checking for duplicate entries
             for (int i = 0; i < salesTable.getItems().size(); i++) {
@@ -176,7 +176,7 @@ public class SkipperViewController implements Initializable {
                 stat = salesTable.getSelectionModel().getSelectedItem().getStatus();
             }
 
-            Sales.updateSales(salesTable.getSelectionModel().getSelectedIndex() + 1, associate, city, stat, Double.parseDouble(amountField.getText()), datePick.getValue().toString());
+            Sales.updateSales(salesTable.getSelectionModel().getSelectedItem().getSalesId(), associate, city, stat, Double.parseDouble(amountField.getText()), datePick.getValue().toString());
             salesTable.getItems().clear();
             salesTable.setItems(Sales.getSales());
         }
@@ -218,7 +218,7 @@ public class SkipperViewController implements Initializable {
     @FXML
     private TableColumn<Associates, String> statusCol;
     @FXML
-    private ComboBox<String> leaderComboBox;
+    private ComboBox<String> statusComboBox;
 
     @FXML
     private void saveAssociate(ActionEvent event) {
@@ -238,7 +238,7 @@ public class SkipperViewController implements Initializable {
                 firstName = associatesFirstNameField.getText();
                 lastName = associatesLastNameField.getText();
                 residence = associatesResidenceField.getText();
-                associateStatus = leaderComboBox.getSelectionModel().getSelectedItem();
+                associateStatus = statusComboBox.getSelectionModel().getSelectedItem();
                 dateOfBirth = associatesDateOfBirth.getValue();
                 startDate = associatesStartDate.getValue();
                 Associates.saveAssociate(firstName, lastName, residence, associateStatus, dateOfBirth, startDate);
@@ -255,6 +255,49 @@ public class SkipperViewController implements Initializable {
 
     @FXML
     private void fillAssociatesFields(MouseEvent event) {
+        if (!associatesTable.getSelectionModel().isEmpty()) {
+            associatesFirstNameField.setText(associatesTable.getSelectionModel().getSelectedItem().getFirstName());
+            associatesLastNameField.setText(associatesTable.getSelectionModel().getSelectedItem().getLastName());
+            associatesResidenceField.setText(associatesTable.getSelectionModel().getSelectedItem().getResidence());
+        }
+    }
+
+    @FXML
+    private void updateAssociates(ActionEvent event) {
+        String firstName;
+        String lastName;
+        String residence;
+        String associateStatus;
+        LocalDate dateOfBirth;
+        LocalDate startDate;
+
+        try {
+            firstName = associatesFirstNameField.getText();
+            lastName = associatesLastNameField.getText();
+            residence = associatesResidenceField.getText();
+            if (statusComboBox.getSelectionModel().isEmpty()) {
+                associateStatus = associatesTable.getSelectionModel().getSelectedItem().getStatus();
+            } else{
+                associateStatus = statusComboBox.getSelectionModel().getSelectedItem();
+            }
+            if (associatesDateOfBirth.getValue() == null) {
+                dateOfBirth = associatesTable.getSelectionModel().getSelectedItem().getDateOfBirth();
+            } else{
+                dateOfBirth = associatesDateOfBirth.getValue();
+            }
+            if (associatesStartDate.getValue() == null) {
+                startDate = associatesTable.getSelectionModel().getSelectedItem().getStartDate();
+            } else{
+                startDate = associatesStartDate.getValue();
+            }
+            Associates.updateAssociates(associatesTable.getSelectionModel().getSelectedItem().getId(), firstName, lastName, residence, lastName, dateOfBirth, startDate);
+        } catch(Exception e){
+            a.setAlertType(Alert.AlertType.ERROR);
+            a.setHeaderText(null);
+            a.setContentText("Problem kod ažuriranja saradnika!\n" + e.getMessage());
+            a.show();
+        }
+
     }
 
     /**
@@ -283,11 +326,9 @@ public class SkipperViewController implements Initializable {
 
         updateButton.setDisable(true);
 
-        leaderComboBox.setItems(FXCollections.observableArrayList("Saradnik", "Lider"));
-        leaderComboBox.getSelectionModel().selectFirst();
+        statusComboBox.setItems(FXCollections.observableArrayList("Saradnik", "Lider"));
 
         //Populating associates table
-//        associatesIdCol.setCellValueFactory(new PropertyValueFactory<>("id"));
         associatesFirstNameCol.setCellValueFactory(new PropertyValueFactory<>("firstName"));
         associatesLastNameCol.setCellValueFactory(new PropertyValueFactory<>("lastName"));
         associatesResidenceCol.setCellValueFactory(new PropertyValueFactory<>("residence"));

@@ -22,7 +22,7 @@ import skipper.DbConnection;
 public class Associates {
 
     private static Connection conn;
-    
+
     private Integer id;
     private String firstName;
     private String lastName;
@@ -30,13 +30,13 @@ public class Associates {
     private String status;
     private LocalDate dateOfBirth;
     private LocalDate startDate;
-    
+
     private static ObservableList<Associates> associatesList = FXCollections.observableArrayList();
     private static Alert a = new Alert(Alert.AlertType.CONFIRMATION);
 
     public Associates() {
     }
-   
+
     public Associates(Integer id, String firstName, String lastName, String residence, String status, LocalDate dateOfBirth, LocalDate startDate) {
         this.id = id;
         this.firstName = firstName;
@@ -102,23 +102,23 @@ public class Associates {
     public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
-    
-    public static ObservableList<Associates> getAssociates(){
+
+    public static ObservableList<Associates> getAssociates() {
         associatesList.clear();
         try {
-            Integer id; 
+            Integer id;
             String firstName;
-            String lastName; 
-            String residence; 
-            String status; 
-            LocalDate dateOfBirth; 
+            String lastName;
+            String residence;
+            String status;
+            LocalDate dateOfBirth;
             LocalDate startDate;
-            
+
             Connection conn = DbConnection.connect();
             Statement s = conn.createStatement();
             s.execute("SELECT * FROM associates ORDER BY first_name");
             ResultSet rs = s.getResultSet();
-            while(rs.next()){
+            while (rs.next()) {
                 id = Integer.parseInt(rs.getString("associate_id"));
                 firstName = rs.getString("first_name");
                 lastName = rs.getString("last_name");
@@ -126,11 +126,11 @@ public class Associates {
                 status = rs.getString("status");
                 dateOfBirth = LocalDate.parse(rs.getString("date_of_birth"));
                 startDate = LocalDate.parse(rs.getString("start_date"));
-                
+
                 associatesList.add(new Associates(id, firstName, lastName, residence, status, dateOfBirth, startDate));
             }
             return associatesList;
-            
+
         } catch (SQLException ex) {
             Alert a = new Alert(Alert.AlertType.ERROR);
             a.setContentText("Greska prilikom ucitavanja saradnika!!\n" + ex.getMessage());
@@ -139,14 +139,37 @@ public class Associates {
         }
         return null;
     }
-    
-    public static void saveAssociate(String firstName, String lastName, String residence, String status, LocalDate dateOfBirth, LocalDate startDate){
+
+    public static void saveAssociate(String firstName, String lastName, String residence, String status, LocalDate dateOfBirth, LocalDate startDate) {
         try {
             conn = DbConnection.connect();
             Statement s = conn.createStatement();
-            s.execute("INSERT INTO associates(associate_id, first_name, last_name, residence, status, date_of_birth, start_date) VALUES(null, '"+firstName+"', '"+lastName+"', '"+residence+"', '"+status+"', '"+dateOfBirth.toString()+"', '"+startDate.toString()+"')");
+            s.execute("INSERT INTO associates(associate_id, first_name, last_name, residence, status, date_of_birth, start_date) VALUES(null, '" + firstName + "', '" + lastName + "', '" + residence + "', '" + status + "', '" + dateOfBirth.toString() + "', '" + startDate.toString() + "')");
             a.setHeaderText(null);
             a.setContentText("Uspešno ste kreirali novog saradnika!");
+            a.show();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            a.setAlertType(Alert.AlertType.ERROR);
+            a.setHeaderText(null);
+            a.setContentText(e.getMessage());
+            a.show();
+        } finally {
+            try {
+                conn.close();
+            } catch (SQLException ex) {
+                ex.getMessage();
+            }
+        }
+    }
+
+    public static void updateAssociates(int id, String firstName, String lastName, String residence, String status, LocalDate dateOfBirth, LocalDate startDate) {
+        try {
+            conn = DbConnection.connect();
+            Statement s = conn.createStatement();
+            s.execute("UPDATE associates SET first_name = '" + firstName + "', last_name = '" + lastName + "', residence = '" + residence + "', status = '" + status + "', date_of_birth = '" + dateOfBirth.toString() + "', start_date = '" + startDate.toString() + "' WHERE associate_id = '" + id + "'");
+            a.setHeaderText(null);
+            a.setContentText("Uspešno ste izmenili podatke!");
             a.show();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -168,13 +191,4 @@ public class Associates {
         return id + ". " + firstName + " " + lastName + ", " + residence + ", " + status;
     }
 
-    
-
-    
-    
-
-  
-    
-    
-    
 }

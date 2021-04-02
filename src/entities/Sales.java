@@ -25,6 +25,7 @@ import skipper.DbConnection;
  */
 public class Sales {
 
+    private Integer salesId;
     private String associate;
     private String status;
     private String city;
@@ -38,12 +39,21 @@ public class Sales {
     public Sales() {
     }
 
-    public Sales(String associate, String status, String city, Double totalAmount, LocalDate dateOfSale) {
+    public Sales(Integer salesId, String associate, String status, String city, Double totalAmount, LocalDate dateOfSale) {
+        this.salesId = salesId;
         this.associate = associate;
         this.status = status;
         this.city = city;
         this.totalAmount = totalAmount;
         this.dateOfSale = dateOfSale;
+    }
+
+    public Integer getSalesId() {
+        return salesId;
+    }
+
+    public void setSalesId(Integer associateId) {
+        this.salesId = associateId;
     }
 
     public String getAssociate() {
@@ -107,6 +117,7 @@ public class Sales {
     public static ObservableList<Sales> getSales() {
         salesList.clear();
         try {
+            Integer id;
             String associate;
             String status;
             String city;
@@ -120,6 +131,7 @@ public class Sales {
             ResultSet rs = s.getResultSet();
 
             while (rs.next()) {
+                id = rs.getInt("sales_id");
                 associate = rs.getString("associate");
                 status = rs.getString("status");
                 city = rs.getString("city");
@@ -127,7 +139,7 @@ public class Sales {
                 dateOfSale = rs.getString("date_of_sale");
                 date = LocalDate.parse(dateOfSale, DateTimeFormatter.ISO_DATE);
 
-                salesList.add(new Sales(associate, status, city, totalAmount, date));
+                salesList.add(new Sales(id, associate, status, city, totalAmount, date));
             }
             return salesList;
 
@@ -193,7 +205,10 @@ public class Sales {
             try {
                 conn.close();
             } catch (SQLException ex) {
-                Logger.getLogger(Sales.class.getName()).log(Level.SEVERE, null, ex);
+                a.setAlertType(Alert.AlertType.ERROR);
+                a.setHeaderText(null);
+                a.setContentText("Problem kod ažuriranja prodaja!\n" + ex.getMessage());
+                a.show();
             }
         }
 
