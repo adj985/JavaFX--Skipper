@@ -31,6 +31,7 @@ public class Sales {
     private String city;
     private Double totalAmount;
     private LocalDate dateOfSale;
+    private Integer income;
 
     private static Connection conn = null;
     private static ObservableList<Sales> salesList = FXCollections.observableArrayList();
@@ -39,13 +40,14 @@ public class Sales {
     public Sales() {
     }
 
-    public Sales(Integer salesId, String associate, String status, String city, Double totalAmount, LocalDate dateOfSale) {
+    public Sales(Integer salesId, String associate, String status, String city, Double totalAmount, LocalDate dateOfSale, Integer income) {
         this.salesId = salesId;
         this.associate = associate;
         this.status = status;
         this.city = city;
         this.totalAmount = totalAmount;
         this.dateOfSale = dateOfSale;
+        this.income = income;
     }
 
     public Integer getSalesId() {
@@ -96,13 +98,15 @@ public class Sales {
         this.dateOfSale = dateOfSale;
     }
 
-    public static Connection getConn() {
-        return conn;
+    public Integer getIncome() {
+        return income;
     }
 
-    public static void setConn(Connection conn) {
-        Sales.conn = conn;
+    public void setIncome(Integer income) {
+        this.income = income;
     }
+
+    
 
     @Override
     public String toString() {
@@ -124,6 +128,7 @@ public class Sales {
             Double totalAmount;
             String dateOfSale;
             LocalDate date;
+            Integer income;
 
             conn = DbConnection.connect();
             Statement s = conn.createStatement();
@@ -138,8 +143,9 @@ public class Sales {
                 totalAmount = rs.getDouble("total_amount");
                 dateOfSale = rs.getString("date_of_sale");
                 date = LocalDate.parse(dateOfSale, DateTimeFormatter.ISO_DATE);
+                income = rs.getInt("income");
 
-                salesList.add(new Sales(id, associate, status, city, totalAmount, date));
+                salesList.add(new Sales(id, associate, status, city, totalAmount, date, income));
             }
             return salesList;
 
@@ -162,12 +168,13 @@ public class Sales {
      * @param city
      * @param totalAmount
      * @param dateOfSale
+     * @param income
      */
-    public static void saveSales(String associate, String status, String city, Double totalAmount, String dateOfSale) {
+    public static void saveSales(String associate, String status, String city, Double totalAmount, String dateOfSale, Integer income) {
         try {
             conn = DbConnection.connect();
             Statement s = conn.createStatement();
-            s.execute("INSERT INTO sales (sales_id, associate, status, city, total_amount, date_of_sale) VALUES (null, '" + associate + "', '" + status + "','" + city + "','" + totalAmount + "','" + dateOfSale + "')");
+            s.execute("INSERT INTO sales (sales_id, associate, status, city, total_amount, date_of_sale, income) VALUES (null, '" + associate + "', '" + status + "','" + city + "','" + totalAmount + "','" + dateOfSale + "', '"+income+"')");
             a.setHeaderText(null);
             a.setContentText("Uspešno ste sačuvali prodaju!");
             a.show();

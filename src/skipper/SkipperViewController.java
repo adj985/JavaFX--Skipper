@@ -6,6 +6,7 @@
 package skipper;
 
 import entities.Associates;
+import entities.Income;
 import entities.Sales;
 import java.net.URL;
 import java.time.LocalDate;
@@ -69,6 +70,8 @@ public class SkipperViewController implements Initializable {
     private Button updateButton;
 
     private final Alert a = new Alert(Alert.AlertType.ERROR);
+    @FXML
+    private TableColumn<Sales, Integer> incomeCol;
 
     @FXML
     private void saveTheSale(ActionEvent event) {
@@ -78,21 +81,28 @@ public class SkipperViewController implements Initializable {
         String city;
         Double totalAmount;
         String dateOfSale;
+        Integer income = 0;
 
         try {
             totalAmount = Double.valueOf(amountField.getText());
             dateOfSale = datePick.getValue().toString();
+
             if (associateCheckBox.isSelected()) {
                 as = associateComboBox.getSelectionModel().getSelectedItem();
                 associate = as.getFirstName() + " " + as.getLastName();
                 stat = as.getStatus();
                 city = as.getResidence();
+                if (as.getStatus().equals("Lider")) {
+                    income = Income.getLeadersIncome();
+                } else {
+                    income = Income.getAssociatesIncome();
+                }
             } else {
                 associate = "Licna prodaja";
-                stat = "Lider";
-                city = "Kragujevac";
+                stat = "Saradnik";
+                city = "Golubac";
             }
-            Sales s = new Sales(null, associate, stat, city, totalAmount, datePick.getValue());
+            Sales s = new Sales(null, associate, stat, city, totalAmount, datePick.getValue(), income);
 
             // Checking for duplicate entries
             for (int i = 0; i < salesTable.getItems().size(); i++) {
@@ -104,7 +114,7 @@ public class SkipperViewController implements Initializable {
                     return;
                 }
             }
-            Sales.saveSales(associate, stat, city, totalAmount, dateOfSale);
+            Sales.saveSales(associate, stat, city, totalAmount, dateOfSale, income);
             associateCheckBox.setSelected(false);
             amountField.clear();
             datePick.setValue(null);
@@ -293,7 +303,7 @@ public class SkipperViewController implements Initializable {
             } else {
                 startDate = associatesStartDate.getValue();
             }
-            Associates.updateAssociates(associatesTable.getSelectionModel().getSelectedItem().getId(), firstName, lastName, residence, lastName, dateOfBirth, startDate);
+            Associates.updateAssociates(associatesTable.getSelectionModel().getSelectedItem().getId(), firstName, lastName, residence, associateStatus, dateOfBirth, startDate);
             associatesSaveButton.setDisable(false);
             associatesUpdateButton.setDisable(true);
             associatesTable.getItems().clear();
@@ -323,14 +333,6 @@ public class SkipperViewController implements Initializable {
      */
     @FXML
     private Tab overviewTab;
-        @FXML
-    private TextField leadersRebate;
-    @FXML
-    private TextField associatesRebate;
-    @FXML
-    private Button saveRebateButton;
-    @FXML
-    private Button clearRebateFieldsButton;
     @FXML
     private TableView<Sales> overviewTable;
     @FXML
@@ -351,13 +353,21 @@ public class SkipperViewController implements Initializable {
     private Label associatesIncomeLabel;
     @FXML
     private Label leadersIncomeLabel;
-    
-        @FXML
-    private void saveRebate(ActionEvent event) {
+    @FXML
+    private TextField leadersIncomeField;
+    @FXML
+    private TextField associatesIncomeField;
+    @FXML
+    private Button saveIncomeButton;
+    @FXML
+    private Button clearIncomeFieldsButton;
+
+    @FXML
+    private void saveIncome(ActionEvent event) {
     }
 
     @FXML
-    private void clearRebateFields(ActionEvent event) {
+    private void clearIncomeFields(ActionEvent event) {
     }
 
     @FXML
@@ -393,13 +403,15 @@ public class SkipperViewController implements Initializable {
         associatesDateOfBirthCol.setCellValueFactory(new PropertyValueFactory<>("dateOfBirth"));
         associatesStartDateCol.setCellValueFactory(new PropertyValueFactory<>("startDate"));
         statusCol.setCellValueFactory(new PropertyValueFactory<>("status"));
-        ObservableList<Associates> a = Associates.getAssociates();
-        associatesTable.setItems(a);
+        ObservableList<Associates> associates = Associates.getAssociates();
+        associatesTable.setItems(associates);
 
         associatesUpdateButton.setDisable(true);
 
+        //Populating overview tab
+        associatesIncomeField.setText(Income.getAssociatesIncome().toString());
+        leadersIncomeField.setText(Income.getLeadersIncome().toString());
     }
 
-
-
 }
+

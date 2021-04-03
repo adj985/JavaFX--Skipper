@@ -42,10 +42,11 @@
                                 <TableView fx:id="salesTable" onMouseClicked="#fillTheFields" prefHeight="848.0" prefWidth="1014.0">
                                     <columns>
                                         <TableColumn fx:id="dateOfSaleCol" prefWidth="130.0" text="Datum prodaje" />
-                                        <TableColumn fx:id="associateCol" prefWidth="417.0" text="Saradnik" />
-                                        <TableColumn fx:id="status" prefWidth="174.0" text="Status" />
-                                        <TableColumn fx:id="cityCol" prefWidth="141.0" text="Mesto stanovanja" />
-                                        <TableColumn fx:id="totalAmountCol" prefWidth="128.0" text="Ukupan iznos" />
+                                        <TableColumn fx:id="associateCol" prefWidth="271.0" text="Saradnik" />
+                                        <TableColumn fx:id="status" prefWidth="188.0" text="Status" />
+                                        <TableColumn fx:id="cityCol" prefWidth="122.0" text="Mesto stanovanja" />
+                                        <TableColumn fx:id="totalAmountCol" prefWidth="187.0" text="Ukupan iznos" />
+                              <TableColumn fx:id="incomeCol" prefWidth="94.0" text="Zarada u %" />
                                         
                                     </columns>
                                 </TableView>
@@ -115,13 +116,13 @@
                         <HBox prefHeight="24.0" prefWidth="298.0">
                            <children>
                               <Label minWidth="150.0" text="Procenat od lidera:" />
-                              <TextField fx:id="leadersRebate" prefHeight="25.0" prefWidth="137.0" />
+                              <TextField fx:id="leadersIncomeField" prefHeight="25.0" prefWidth="137.0" />
                            </children>
                         </HBox>
                         <HBox layoutX="11.0" layoutY="48.0" prefHeight="24.0" prefWidth="298.0">
                            <children>
                               <Label minWidth="150.0" text="Procenat od saradnika:" />
-                              <TextField fx:id="associatesRebate" prefHeight="25.0" prefWidth="137.0" />
+                              <TextField fx:id="associatesIncomeField" prefHeight="25.0" prefWidth="137.0" />
                            </children>
                         </HBox>
                         <HBox layoutX="16.0" layoutY="116.0" prefHeight="37.0" prefWidth="298.0" spacing="10.0">
@@ -131,8 +132,8 @@
                         </HBox>
                         <HBox prefHeight="37.0" prefWidth="298.0" spacing="10.0">
                            <children>
-                              <Button fx:id="saveRebateButton" mnemonicParsing="false" onAction="#saveRebate" text="Sačuvaj" />
-                              <Button fx:id="clearRebateFieldsButton" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#clearRebateFields" text="Poništi" />
+                              <Button fx:id="saveIncomeButton" mnemonicParsing="false" onAction="#saveIncome" text="Sačuvaj" />
+                              <Button fx:id="clearIncomeFieldsButton" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#clearIncomeFields" text="Poništi" />
                            </children>
                         </HBox>
                      </children>
