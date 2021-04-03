@@ -5,6 +5,7 @@
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
@@ -13,8 +14,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1318.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="skipper.SkipperViewController">
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1298.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="skipper.SkipperViewController">
     <tabs>
         <Tab fx:id="salesTab" text="Prodaja">
             <content>
@@ -42,8 +44,8 @@
                                         <TableColumn fx:id="dateOfSaleCol" prefWidth="130.0" text="Datum prodaje" />
                                         <TableColumn fx:id="associateCol" prefWidth="417.0" text="Saradnik" />
                                         <TableColumn fx:id="status" prefWidth="174.0" text="Status" />
-                                        <TableColumn fx:id="cityCol" prefWidth="141.0" text="Grad" />
-                                        <TableColumn fx:id="totalAmountCol" prefWidth="149.0" text="Ukupan iznos" />
+                                        <TableColumn fx:id="cityCol" prefWidth="141.0" text="Mesto stanovanja" />
+                                        <TableColumn fx:id="totalAmountCol" prefWidth="128.0" text="Ukupan iznos" />
                                         
                                     </columns>
                                 </TableView>
@@ -70,7 +72,7 @@
                                         <HBox prefHeight="41.0" prefWidth="249.0" spacing="5.0">
                                             <children>
                                                 <Button fx:id="associatesSaveButton" mnemonicParsing="false" onAction="#saveAssociate" prefHeight="25.0" prefWidth="87.0" text="Sačuvaj" />
-                                                <Button fx:id="associatesClearButton" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="87.0" text="Poništi" />
+                                                <Button fx:id="associatesClearButton" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#clearAssociatesFields" prefHeight="25.0" prefWidth="87.0" text="Poništi" />
                                                 <Button fx:id="associatesUpdateButton" layoutX="102.0" layoutY="10.0" mnemonicParsing="false" onAction="#updateAssociates" prefHeight="25.0" prefWidth="87.0" text="Izmeni" />
                                             </children>
                                         </HBox>
@@ -101,7 +103,86 @@
         </Tab>
         <Tab fx:id="overviewTab" text="Pregled">
             <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <VBox layoutX="14.0" layoutY="623.0" prefHeight="200.0" prefWidth="224.0" spacing="10.0" style="-fx-border-color: black;">
+                     <children>
+                        <Label prefHeight="17.0" prefWidth="233.0" text="Podešavanje zarade">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <HBox prefHeight="24.0" prefWidth="298.0">
+                           <children>
+                              <Label minWidth="150.0" text="Procenat od lidera:" />
+                              <TextField fx:id="leadersRebate" prefHeight="25.0" prefWidth="137.0" />
+                           </children>
+                        </HBox>
+                        <HBox layoutX="11.0" layoutY="48.0" prefHeight="24.0" prefWidth="298.0">
+                           <children>
+                              <Label minWidth="150.0" text="Procenat od saradnika:" />
+                              <TextField fx:id="associatesRebate" prefHeight="25.0" prefWidth="137.0" />
+                           </children>
+                        </HBox>
+                        <HBox layoutX="16.0" layoutY="116.0" prefHeight="37.0" prefWidth="298.0" spacing="10.0">
+                           <children>
+                              <CheckBox mnemonicParsing="false" selected="true" text="Računaj +1% od saradnika" />
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="37.0" prefWidth="298.0" spacing="10.0">
+                           <children>
+                              <Button fx:id="saveRebateButton" mnemonicParsing="false" onAction="#saveRebate" text="Sačuvaj" />
+                              <Button fx:id="clearRebateFieldsButton" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#clearRebateFields" text="Poništi" />
+                           </children>
+                        </HBox>
+                     </children>
+                     <padding>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </padding>
+                  </VBox>
+                  <TableView fx:id="overviewTable" layoutX="289.0" layoutY="56.0" prefHeight="767.0" prefWidth="1027.0">
+                    <columns>
+                      <TableColumn fx:id="overviewAssociateCol" prefWidth="357.0" text="Saradnik" />
+                      <TableColumn fx:id="overviewResidenceCol" prefWidth="258.0" text="Mesto stanovanja" />
+                        <TableColumn fx:id="overviewStatusCol" prefWidth="184.0" text="Status" />
+                        <TableColumn fx:id="overviewTotalAmountCol" prefWidth="225.0" text="Iznos porudžbine" />
+                    </columns>
+                  </TableView>
+                  <VBox layoutX="14.0" layoutY="47.0" prefHeight="305.0" prefWidth="225.0">
+                     <children>
+                        <VBox prefHeight="129.0" prefWidth="193.0" spacing="10.0">
+                           <children>
+                              <Label text="Izaberi opseg vremena za prikaz" />
+                              <DatePicker fx:id="fromDatePick" promptText="Od datuma" />
+                              <DatePicker fx:id="toDatePick" promptText="Do datuma" />
+                              <Button fx:id="showDataButton" mnemonicParsing="false" onAction="#showData" text="OK" />
+                           </children>
+                           <padding>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </padding>
+                        </VBox>
+                        <VBox prefHeight="165.0" prefWidth="143.0" spacing="10.0">
+                           <children>
+                              <Label text="Zarada od saradnika" />
+                              <Label fx:id="associatesIncomeLabel" prefHeight="27.0" prefWidth="180.0" style="-fx-background-color: lightgray;">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Label>
+                              <Label text="Zarada od lidera" />
+                              <Label fx:id="leadersIncomeLabel" layoutX="15.0" layoutY="42.0" prefHeight="27.0" prefWidth="180.0" style="-fx-background-color: lightgray;">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                           <padding>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </padding>
+                        </VBox>
+                     </children>
+                  </VBox>
+               </children></AnchorPane>
             </content>
         </Tab>
     </tabs>

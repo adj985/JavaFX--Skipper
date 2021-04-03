@@ -170,6 +170,7 @@ public class Sales {
             s.execute("INSERT INTO sales (sales_id, associate, status, city, total_amount, date_of_sale) VALUES (null, '" + associate + "', '" + status + "','" + city + "','" + totalAmount + "','" + dateOfSale + "')");
             a.setHeaderText(null);
             a.setContentText("Uspešno ste sačuvali prodaju!");
+            a.show();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
             a.setAlertType(Alert.AlertType.ERROR);

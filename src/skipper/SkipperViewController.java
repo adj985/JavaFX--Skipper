@@ -21,6 +21,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -259,6 +260,8 @@ public class SkipperViewController implements Initializable {
             associatesFirstNameField.setText(associatesTable.getSelectionModel().getSelectedItem().getFirstName());
             associatesLastNameField.setText(associatesTable.getSelectionModel().getSelectedItem().getLastName());
             associatesResidenceField.setText(associatesTable.getSelectionModel().getSelectedItem().getResidence());
+            associatesSaveButton.setDisable(true);
+            associatesUpdateButton.setDisable(false);
         }
     }
 
@@ -277,21 +280,25 @@ public class SkipperViewController implements Initializable {
             residence = associatesResidenceField.getText();
             if (statusComboBox.getSelectionModel().isEmpty()) {
                 associateStatus = associatesTable.getSelectionModel().getSelectedItem().getStatus();
-            } else{
+            } else {
                 associateStatus = statusComboBox.getSelectionModel().getSelectedItem();
             }
             if (associatesDateOfBirth.getValue() == null) {
                 dateOfBirth = associatesTable.getSelectionModel().getSelectedItem().getDateOfBirth();
-            } else{
+            } else {
                 dateOfBirth = associatesDateOfBirth.getValue();
             }
             if (associatesStartDate.getValue() == null) {
                 startDate = associatesTable.getSelectionModel().getSelectedItem().getStartDate();
-            } else{
+            } else {
                 startDate = associatesStartDate.getValue();
             }
             Associates.updateAssociates(associatesTable.getSelectionModel().getSelectedItem().getId(), firstName, lastName, residence, lastName, dateOfBirth, startDate);
-        } catch(Exception e){
+            associatesSaveButton.setDisable(false);
+            associatesUpdateButton.setDisable(true);
+            associatesTable.getItems().clear();
+            associatesTable.setItems(Associates.getAssociates());
+        } catch (Exception e) {
             a.setAlertType(Alert.AlertType.ERROR);
             a.setHeaderText(null);
             a.setContentText("Problem kod ažuriranja saradnika!\n" + e.getMessage());
@@ -300,11 +307,62 @@ public class SkipperViewController implements Initializable {
 
     }
 
+    @FXML
+    private void clearAssociatesFields(ActionEvent event) {
+        associatesFirstNameField.setText("");
+        associatesLastNameField.setText("");
+        associatesStartDate.setValue(null);
+        associatesDateOfBirth.setValue(null);
+        statusComboBox.getSelectionModel().clearSelection();
+        associatesSaveButton.setDisable(false);
+        associatesUpdateButton.setDisable(true);
+    }
+
     /**
      * Overview tab
      */
     @FXML
     private Tab overviewTab;
+        @FXML
+    private TextField leadersRebate;
+    @FXML
+    private TextField associatesRebate;
+    @FXML
+    private Button saveRebateButton;
+    @FXML
+    private Button clearRebateFieldsButton;
+    @FXML
+    private TableView<Sales> overviewTable;
+    @FXML
+    private TableColumn<Sales, String> overviewAssociateCol;
+    @FXML
+    private TableColumn<Sales, String> overviewResidenceCol;
+    @FXML
+    private TableColumn<Sales, String> overviewStatusCol;
+    @FXML
+    private TableColumn<Sales, Double> overviewTotalAmountCol;
+    @FXML
+    private DatePicker fromDatePick;
+    @FXML
+    private DatePicker toDatePick;
+    @FXML
+    private Button showDataButton;
+    @FXML
+    private Label associatesIncomeLabel;
+    @FXML
+    private Label leadersIncomeLabel;
+    
+        @FXML
+    private void saveRebate(ActionEvent event) {
+    }
+
+    @FXML
+    private void clearRebateFields(ActionEvent event) {
+    }
+
+    @FXML
+    private void showData(ActionEvent event) {
+    }
 
     /**
      * Initializes the controller class.
@@ -338,6 +396,10 @@ public class SkipperViewController implements Initializable {
         ObservableList<Associates> a = Associates.getAssociates();
         associatesTable.setItems(a);
 
+        associatesUpdateButton.setDisable(true);
+
     }
+
+
 
 }
