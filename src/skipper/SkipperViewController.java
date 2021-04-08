@@ -72,6 +72,8 @@ public class SkipperViewController implements Initializable {
     private final Alert a = new Alert(Alert.AlertType.ERROR);
     @FXML
     private TableColumn<Sales, Integer> incomeCol;
+    @FXML
+    private CheckBox incomeAdditionCheckBox;
 
     @FXML
     private void saveTheSale(ActionEvent event) {

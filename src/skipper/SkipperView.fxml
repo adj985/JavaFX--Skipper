@@ -16,37 +16,37 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1298.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="skipper.SkipperViewController">
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="863.0" prefWidth="1244.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="skipper.SkipperViewController">
     <tabs>
         <Tab fx:id="salesTab" text="Prodaja">
             <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                     <children>
-                        <HBox layoutX="10.0" layoutY="21.0" prefHeight="848.0" prefWidth="1307.0" spacing="20.0">
+                        <HBox layoutX="10.0" layoutY="21.0" prefHeight="848.0" prefWidth="1286.0" spacing="20.0">
                             <children>
-                                <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="553.0" prefWidth="274.0" spacing="10.0">
+                                <VBox fillWidth="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="848.0" prefWidth="320.0" spacing="10.0">
                                     <children>
                                         <CheckBox fx:id="associateCheckBox" mnemonicParsing="false" onAction="#loadAssociates" text="Saradnik" />
-                                        <ComboBox fx:id="associateComboBox" disable="true" prefHeight="25.0" prefWidth="273.0" promptText="Odaberi saradnika" />
+                                        <ComboBox fx:id="associateComboBox" disable="true" prefHeight="26.0" prefWidth="317.0" promptText="Odaberi saradnika" />
                                         <TextField fx:id="amountField" minHeight="-Infinity" prefHeight="25.0" prefWidth="175.0" promptText="Ukupan iznos" />
-                                        <DatePicker fx:id="datePick" prefHeight="25.0" prefWidth="153.0" promptText="datum prodaje" />
-                                        <HBox prefHeight="45.0" prefWidth="274.0" spacing="20.0">
+                                        <DatePicker fx:id="datePick" prefHeight="26.0" prefWidth="174.0" promptText="datum prodaje" />
+                                        <HBox prefHeight="46.0" prefWidth="316.0" spacing="10.0">
                                             <children>
-                                                <Button fx:id="okButton" mnemonicParsing="false" onAction="#saveTheSale" prefHeight="25.0" prefWidth="105.0" text="Sacuvaj prodaju" />
-                                                <Button fx:id="cancelButton" mnemonicParsing="false" onAction="#clearSalesFields" prefHeight="25.0" prefWidth="67.0" text="Ponisti" />
-                                    <Button fx:id="updateButton" layoutX="97.0" layoutY="10.0" mnemonicParsing="false" onAction="#updateSales" prefHeight="25.0" prefWidth="67.0" text="Izmeni" />
+                                                <Button fx:id="okButton" mnemonicParsing="false" onAction="#saveTheSale" prefHeight="25.0" prefWidth="129.0" text="Sacuvaj prodaju" />
+                                                <Button fx:id="cancelButton" mnemonicParsing="false" onAction="#clearSalesFields" prefHeight="26.0" prefWidth="88.0" text="Ponisti" />
+                                    <Button fx:id="updateButton" layoutX="97.0" layoutY="10.0" mnemonicParsing="false" onAction="#updateSales" prefHeight="26.0" prefWidth="98.0" text="Izmeni" />
                                             </children>
                                         </HBox>
                                     </children>
                                 </VBox>
-                                <TableView fx:id="salesTable" onMouseClicked="#fillTheFields" prefHeight="848.0" prefWidth="1014.0">
+                                <TableView fx:id="salesTable" maxHeight="815.0" minHeight="500.0" onMouseClicked="#fillTheFields" prefHeight="815.0" prefWidth="881.0">
                                     <columns>
-                                        <TableColumn fx:id="dateOfSaleCol" prefWidth="130.0" text="Datum prodaje" />
-                                        <TableColumn fx:id="associateCol" prefWidth="271.0" text="Saradnik" />
-                                        <TableColumn fx:id="status" prefWidth="188.0" text="Status" />
-                                        <TableColumn fx:id="cityCol" prefWidth="122.0" text="Mesto stanovanja" />
-                                        <TableColumn fx:id="totalAmountCol" prefWidth="187.0" text="Ukupan iznos" />
-                              <TableColumn fx:id="incomeCol" prefWidth="94.0" text="Zarada u %" />
+                                        <TableColumn fx:id="dateOfSaleCol" prefWidth="139.20001220703125" text="Datum prodaje" />
+                                        <TableColumn fx:id="associateCol" prefWidth="193.60000610351562" text="Saradnik" />
+                                        <TableColumn fx:id="status" maxWidth="230.4000244140625" prefWidth="142.39996337890625" text="Status" />
+                                        <TableColumn fx:id="cityCol" prefWidth="139.20001220703125" text="Mesto stanovanja" />
+                                        <TableColumn fx:id="totalAmountCol" prefWidth="102.4000244140625" text="Ukupan iznos" />
+                              <TableColumn fx:id="incomeCol" maxWidth="180.0" prefWidth="156.0" text="Zarada u %" />
                                         
                                     </columns>
                                 </TableView>
@@ -84,14 +84,14 @@
                                 </VBox>
                                 <VBox prefHeight="846.0" prefWidth="1062.0">
                                     <children>
-                                        <TableView fx:id="associatesTable" onMouseClicked="#fillAssociatesFields" prefHeight="846.0" prefWidth="1018.0">
+                                        <TableView fx:id="associatesTable" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#fillAssociatesFields" prefHeight="846.0" prefWidth="956.0">
                                             <columns>
                                                 <TableColumn fx:id="associatesFirstNameCol" prefWidth="180.0" text="Ime" />
                                                 <TableColumn fx:id="associatesLastNameCol" prefWidth="201.0" text="Prezime" />
                                                 <TableColumn fx:id="associatesResidenceCol" prefWidth="175.0" text="Mesto stanovanja" />
                                                 <TableColumn fx:id="associatesDateOfBirthCol" prefWidth="171.0" text="Datum rodjenja" />
-                                                <TableColumn fx:id="associatesStartDateCol" prefWidth="156.0" text="Datum učlanjenja" />
-                                    <TableColumn fx:id="statusCol" prefWidth="146.0" text="Status" />
+                                                <TableColumn fx:id="associatesStartDateCol" prefWidth="120.800048828125" text="Datum učlanjenja" />
+                                    <TableColumn fx:id="statusCol" maxWidth="168.800048828125" prefWidth="103.2000732421875" text="Status" />
                                             </columns>
                                         </TableView>
                                     </children>
@@ -106,7 +106,7 @@
             <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
-                  <VBox layoutX="14.0" layoutY="623.0" prefHeight="200.0" prefWidth="224.0" spacing="10.0" style="-fx-border-color: black;">
+                  <VBox layoutX="15.0" layoutY="623.0" prefHeight="200.0" prefWidth="224.0" spacing="10.0" style="-fx-border-color: black;">
                      <children>
                         <Label prefHeight="17.0" prefWidth="233.0" text="Podešavanje zarade">
                            <font>
@@ -127,7 +127,7 @@
                         </HBox>
                         <HBox layoutX="16.0" layoutY="116.0" prefHeight="37.0" prefWidth="298.0" spacing="10.0">
                            <children>
-                              <CheckBox mnemonicParsing="false" selected="true" text="Računaj +1% od saradnika" />
+                              <CheckBox fx:id="incomeAdditionCheckBox" mnemonicParsing="false" selected="true" text="Računaj +1% od saradnika" />
                            </children>
                         </HBox>
                         <HBox prefHeight="37.0" prefWidth="298.0" spacing="10.0">
@@ -141,12 +141,12 @@
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </padding>
                   </VBox>
-                  <TableView fx:id="overviewTable" layoutX="289.0" layoutY="56.0" prefHeight="767.0" prefWidth="1027.0">
+                  <TableView fx:id="overviewTable" layoutX="289.0" layoutY="56.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="767.0" prefWidth="950.0">
                     <columns>
-                      <TableColumn fx:id="overviewAssociateCol" prefWidth="357.0" text="Saradnik" />
-                      <TableColumn fx:id="overviewResidenceCol" prefWidth="258.0" text="Mesto stanovanja" />
-                        <TableColumn fx:id="overviewStatusCol" prefWidth="184.0" text="Status" />
-                        <TableColumn fx:id="overviewTotalAmountCol" prefWidth="225.0" text="Iznos porudžbine" />
+                      <TableColumn fx:id="overviewAssociateCol" prefWidth="333.60003662109375" text="Saradnik" />
+                      <TableColumn fx:id="overviewResidenceCol" prefWidth="282.4000244140625" text="Mesto stanovanja" />
+                        <TableColumn fx:id="overviewStatusCol" prefWidth="186.39996337890625" text="Status" />
+                        <TableColumn fx:id="overviewTotalAmountCol" maxWidth="186.39990234375" minWidth="-Infinity" prefWidth="148.800048828125" text="Iznos porudžbine" />
                     </columns>
                   </TableView>
                   <VBox layoutX="14.0" layoutY="47.0" prefHeight="305.0" prefWidth="225.0">

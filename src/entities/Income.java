@@ -29,7 +29,7 @@ public class Income {
     
     public static Integer getLeadersIncome(){
         try {
-            Integer i;
+            int i;
             conn = DbConnection.connect();
             Statement s = conn.createStatement();
             ResultSet rs = s.executeQuery("SELECT leaders_income FROM income");
